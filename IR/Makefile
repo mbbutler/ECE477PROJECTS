@@ -2,7 +2,7 @@ CC=avr-gcc
 CFLAGS=-g -Os -Wall -mcall-prologues -mmcu=atmega8 -Wno-char-subscripts
 OBJ2HEX=avr-objcopy
 #UISP=/usr/local/bin/uisp
-TARGET=AVRrtttl
+TARGET=AVRircapture
 ADFLAGS=-p m8 -c avrispmkII -P usb
 
 .PHONY: fuses prog erase pc
@@ -31,4 +31,4 @@ fuses:
 	avrdude $(ADFLAGS) -U hfuse:w:0xd9:m
 
 pc:
-	gcc PCrtttl_serial.c -o rtttl -lm
+	gcc PCir.c -o pc -lncurses

@@ -1,11 +1,11 @@
 CC=avr-gcc
-CFLAGS=-g -Os -Wall -mcall-prologues -mmcu=atmega8 -Wno-char-subscripts
+CFLAGS=-g -Os -Wall -mcall-prologues -mmcu=atmega8
 OBJ2HEX=avr-objcopy
 #UISP=/usr/local/bin/uisp
-TARGET=AVRrtttl
-ADFLAGS=-p m8 -c avrispmkII -P usb
+TARGET=demo
+ADFLAGS=-p atmega8 -c avrispmkII -P usb
 
-.PHONY: fuses prog erase pc
+.PHONY: fuses prog erase
 
 
 prog : $(TARGET).hex $(TARGET).eeprom
@@ -24,11 +24,8 @@ prog : $(TARGET).hex $(TARGET).eeprom
 erase :
 	 avrdude $(ADFLAGS) -E noreset -e
 clean :
-	rm -f *.hex *.obj *.o *.eeprom
+	rm -f *.hex *.obj *.o
 
 fuses:
-	avrdude $(ADFLAGS) -U lfuse:w:0xE4:m #http://www.engbedded.com/cgi-bin/fc.cgi 
+	avrdude $(ADFLAGS) -U lfuse:w:0xE1:m #http://www.engbedded.com/cgi-bin/fc.cgi 
 	avrdude $(ADFLAGS) -U hfuse:w:0xd9:m
-
-pc:
-	gcc PCrtttl_serial.c -o rtttl -lm
